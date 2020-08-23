@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 6e92b8aa8658beb4b4467d1dfffdc576f013391c7b6640cd624a66f19d4197d6
+-- hash: b3d9a5bc1661bb5ebbb6468a40428f7b5fb0006a38b735ad8955b1778b3ceed7
 
 name:           reveal-hs
 version:        0.1.0.0
@@ -27,6 +27,8 @@ source-repository head
 
 library
   exposed-modules:
+      CSS
+      Javascript
       Library
   other-modules:
       Paths_reveal_hs
@@ -35,6 +37,10 @@ library
   build-depends:
       base >=4.7 && <5
     , blaze-html
+    , blaze-markup
+    , bytestring
+    , file-embed
+    , text
   default-language: Haskell2010
 
 executable reveal-hs-exe
@@ -47,7 +53,11 @@ executable reveal-hs-exe
   build-depends:
       base >=4.7 && <5
     , blaze-html
+    , blaze-markup
+    , bytestring
+    , file-embed
     , reveal-hs
+    , text
   default-language: Haskell2010
 
 test-suite reveal-hs-test
@@ -61,5 +71,9 @@ test-suite reveal-hs-test
   build-depends:
       base >=4.7 && <5
     , blaze-html
+    , blaze-markup
+    , bytestring
+    , file-embed
     , reveal-hs
+    , text
   default-language: Haskell2010
