@@ -20,7 +20,19 @@ import Javascript
 
 -- Configuration
 
-data Theme = Serif
+data Theme
+  = Beige
+  | Black
+  | Blood
+  | League
+  | Moon
+  | Night
+  | Serif
+  | Simple
+  | Sky
+  | Solarized
+  | White
+
 data HighlightTheme = Monokai
 
 data RevealConfig = MkRevealConfig
@@ -43,10 +55,20 @@ slidesHead config = do
   title (fromString . slidesTitle $ config)
   Text.Blaze.Html5.style $ preEscapedToHtml resetCSS
   Text.Blaze.Html5.style $ preEscapedToHtml revealCSS
-  case theme config of
-    Serif -> Text.Blaze.Html5.style $ preEscapedToHtml serifCSS -- id = "theme" ?
-  case highlightTheme config of
-    Monokai -> Text.Blaze.Html5.style $ preEscapedToHtml monokaiCSS -- id = "highlight-theme" ?
+  Text.Blaze.Html5.style $ preEscapedToHtml (case theme config of -- id = "theme" ?
+                                               Beige     -> beigeCSS
+                                               Black     -> blackCSS
+                                               Blood     -> bloodCSS
+                                               League    -> leagueCSS
+                                               Moon      -> moonCSS
+                                               Night     -> nightCSS
+                                               Serif     -> serifCSS
+                                               Simple    -> simpleCSS
+                                               Sky       -> skyCSS
+                                               Solarized -> solarizedCSS
+                                               White     -> whiteCSS)
+  Text.Blaze.Html5.style $ preEscapedToHtml (case highlightTheme config of -- id = "highlight-theme" ?
+                                               Monokai -> monokaiCSS)
 
 slidesBody :: [Slide] -> Html
 slidesBody slides = do
