@@ -1,11 +1,14 @@
 {-# LANGUAGE TemplateHaskell #-}
-module Javascript where
+module Javascript
+  ( highlightJS
+  , mathJS
+  , notesJS
+  , revealJS
+  ) where
 
-import qualified Data.ByteString as BS
-import Data.Text
-import Data.Text.Encoding
+import Data.Text ( Text )
+import Data.Text.Encoding ( decodeUtf8 )
 import Data.FileEmbed (embedFile)
-
 
 highlightJS :: Text
 highlightJS = decodeUtf8 $(embedFile "./javascript/highlight.js")
