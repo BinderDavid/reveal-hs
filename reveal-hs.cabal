@@ -23,6 +23,7 @@ library
       CSS
       Javascript
       Library
+      CodeBlock
   other-modules:
       Paths_reveal_hs
   hs-source-dirs:
