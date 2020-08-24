@@ -1,36 +1,52 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Library
   ( Slide
+  , Theme(..)
+  , HighlightTheme(..)
+  , RevealConfig(..)
   , slides
   ) where
 
 import Text.Blaze.Html
 import Text.Blaze.Html5
 import Text.Blaze.Html5.Attributes hiding (title)
-import Text.Blaze.Html.Renderer.Pretty
 
 import Control.Monad (forM_)
+import Data.String (fromString)
 import Prelude hiding (head, id, div)
 
 import CSS
 import Javascript
 
+-- Configuration
+
+data Theme = Serif
+data HighlightTheme = Monokai
+
+data RevealConfig = MkRevealConfig
+  { theme :: Theme
+  , highlightTheme :: HighlightTheme
+  , slidesTitle :: String
+  }
+
 type Slide = Html
 
-slides :: [Slide] -> Html
-slides slides = docTypeHtml $ do
-  head slidesHead
+slides :: RevealConfig -> [Slide] -> Html
+slides config slides = docTypeHtml $ do
+  head (slidesHead config)
   body (slidesBody slides)
 
-slidesHead :: Html
-slidesHead = do
+slidesHead :: RevealConfig -> Html
+slidesHead config = do
   meta ! charset "utf-8"
   meta ! name "viewport" ! content "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  title "TITLE"
+  title (fromString . slidesTitle $ config)
   Text.Blaze.Html5.style $ preEscapedToHtml resetCSS
   Text.Blaze.Html5.style $ preEscapedToHtml revealCSS
-  Text.Blaze.Html5.style $ preEscapedToHtml serifCSS -- id = "theme" ?
-  Text.Blaze.Html5.style $ preEscapedToHtml monokaiCSS -- id = "highlight-theme" ?
+  case theme config of
+    Serif -> Text.Blaze.Html5.style $ preEscapedToHtml serifCSS -- id = "theme" ?
+  case highlightTheme config of
+    Monokai -> Text.Blaze.Html5.style $ preEscapedToHtml monokaiCSS -- id = "highlight-theme" ?
 
 slidesBody :: [Slide] -> Html
 slidesBody slides = do

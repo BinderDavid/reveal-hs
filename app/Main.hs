@@ -19,6 +19,13 @@ dataNoEscape = attribute "data-noescape" " data-noescape=\"" ""
 dataLineNumbers :: AttributeValue -> Attribute
 dataLineNumbers = attribute "data-line-numbers" " data-line-numbers=\""
 
+config :: RevealConfig
+config = MkRevealConfig
+  { theme = Serif
+  , highlightTheme = Monokai
+  , slidesTitle = "MySlides"
+  }
+
 slide1, slide2, slide3, slide4 :: Slide
 slide1 = h2 $ "Title Slide"
 
@@ -39,7 +46,7 @@ slide4 = do
   "hello"
 
 renderedSlides :: String
-renderedSlides = renderHtml $ slides [slide1, slide2, slide3, slide4]
+renderedSlides = renderHtml $ slides config [slide1, slide2, slide3, slide4]
 
 main :: IO ()
 main = do
