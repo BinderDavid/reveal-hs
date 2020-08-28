@@ -13,6 +13,9 @@ import Text.HaskellReveal.Slide
 import Text.HaskellReveal.Presentation
 import Text.HaskellReveal.CodeBlock
 
+mySlide :: Html -> Slide
+mySlide = mkSlide Fast (STransition Zoom)
+
 -- We choose a theme for the presentation, a theme for
 -- the code highlighter, and a title for the slides.
 config :: RevealConfig
@@ -23,18 +26,18 @@ config = MkRevealConfig
   }
 
 titleSlide :: Slide
-titleSlide = createSlide $ do
+titleSlide = mySlide $ do
   h2 $ "Title Slide"
 
 listSlide :: Slide
-listSlide = createSlide $ do
+listSlide = mySlide $ do
   h3 $ "Slide 2"
   ul $ do
     li $ "point 1"
     li $ "point 2"
 
 codeSlide :: Slide
-codeSlide = createSlide $ do
+codeSlide = mySlide $ do
   h3 $ "Code"
   codeBlock "1-2"
     [ "main :: IO ()"
@@ -42,7 +45,7 @@ codeSlide = createSlide $ do
     ]
 
 goodbyeSlide :: Slide
-goodbyeSlide = createSlide $ do
+goodbyeSlide = mySlide $ do
   h3 $ "Test"
   "Goodbye"
 

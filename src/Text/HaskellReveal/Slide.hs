@@ -1,24 +1,22 @@
 {-# LANGUAGE OverloadedStrings #-}
 module Text.HaskellReveal.Slide
   ( Slide(..)
-  , createSlide
+  , TransitionSpeed(..)
+  , SimpleTransition(..)
+  , Transition(..)
+  , mkSlide
   ) where
 
-import Text.Blaze.Html
-import Text.Blaze.Html5
-import Text.Blaze.Html5.Attributes hiding (title)
+import Text.Blaze.Html5 (Html, Attribute, (!))
+import qualified Text.Blaze.Html5 as H
 import Text.Blaze.Internal (attribute)
-
-import Control.Monad (forM_)
 import Data.String (fromString)
-import Prelude hiding (head, id, div)
-
 
 newtype Slide = MkSlide { unSlide :: Html }
 
 
-createSlide :: Html -> Slide
-createSlide h = MkSlide $ section ! dataTransition (STransition Zoom) ! dataTransitionSpeed Slow $ h
+mkSlide :: TransitionSpeed -> Transition -> Html -> Slide
+mkSlide trs tr h = MkSlide $ H.section ! dataTransition tr ! dataTransitionSpeed trs $ h
 
 ------------------------------------------------
 -- Transitions
