@@ -9,7 +9,8 @@ import Text.Blaze.Html.Renderer.Pretty
 import Control.Monad (forM_)
 import Prelude hiding (head, id, div)
 
-import Library
+import Slide
+import Presentation
 import CodeBlock
 
 config :: RevealConfig

@@ -22,7 +22,8 @@ library
   exposed-modules:
       CSS
       Javascript
-      Library
+      Slide
+      Presentation
       CodeBlock
   other-modules:
       Paths_reveal_hs
