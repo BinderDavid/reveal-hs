@@ -5,6 +5,7 @@ module Library
   , HighlightTheme(..)
   , RevealConfig(..)
   , slides
+  , createSlide
   ) where
 
 import Text.Blaze.Html
@@ -42,7 +43,7 @@ data RevealConfig = MkRevealConfig
   , slidesTitle :: String
   }
 
-type Slide = Html
+newtype Slide = MkSlide { unSlide :: Html }
 
 slides :: RevealConfig -> [Slide] -> Html
 slides config slides = docTypeHtml $ do
@@ -94,11 +95,11 @@ slidesBody slides = do
 
 
 
-foo :: Html -> Slide
-foo h = section ! dataTransition (STransition Zoom) ! dataTransitionSpeed Slow $ h
+createSlide :: Html -> Slide
+createSlide h = MkSlide $ section ! dataTransition (STransition Zoom) ! dataTransitionSpeed Slow $ h
 
 slidesToHtml :: [Slide] -> Html
-slidesToHtml slides = forM_  slides foo
+slidesToHtml slides = forM_  slides unSlide
 
 
 ------------------------------------------------
