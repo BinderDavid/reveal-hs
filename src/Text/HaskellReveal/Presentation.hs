@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Presentation where
+module Text.HaskellReveal.Presentation where
 
 import Text.Blaze.Html
 import Text.Blaze.Html5
@@ -10,9 +10,9 @@ import Control.Monad (forM_)
 import Data.String (fromString)
 import Prelude hiding (head, id, div)
 
-import Slide
-import CSS
-import Javascript
+import Text.HaskellReveal.Slide
+import Text.HaskellReveal.CSS
+import Text.HaskellReveal.Javascript
 
 -- Configuration
 

@@ -1,5 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
-module CSS
+module Text.HaskellReveal.CSS
   ( resetCSS
   , revealCSS
     -- Themes

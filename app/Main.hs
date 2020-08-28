@@ -9,9 +9,9 @@ import Text.Blaze.Html.Renderer.Pretty
 import Control.Monad (forM_)
 import Prelude hiding (head, id, div)
 
-import Slide
-import Presentation
-import CodeBlock
+import Text.HaskellReveal.Slide
+import Text.HaskellReveal.Presentation
+import Text.HaskellReveal.CodeBlock
 
 config :: RevealConfig
 config = MkRevealConfig

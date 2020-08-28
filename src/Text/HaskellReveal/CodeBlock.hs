@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module CodeBlock where
+module Text.HaskellReveal.CodeBlock where
 
 import Data.String ( fromString )
 import Text.Blaze.Html

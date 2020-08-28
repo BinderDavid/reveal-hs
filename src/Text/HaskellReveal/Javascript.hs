@@ -1,5 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
-module Javascript
+module Text.HaskellReveal.Javascript
   ( highlightJS
   , mathJS
   , notesJS

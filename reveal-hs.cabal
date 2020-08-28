@@ -20,11 +20,11 @@ source-repository head
 
 library
   exposed-modules:
-      CSS
-      Javascript
-      Slide
-      Presentation
-      CodeBlock
+      Text.HaskellReveal.CSS
+      Text.HaskellReveal.Javascript
+      Text.HaskellReveal.Slide
+      Text.HaskellReveal.Presentation
+      Text.HaskellReveal.CodeBlock
   other-modules:
       Paths_reveal_hs
   hs-source-dirs:

@@ -1,5 +1,5 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Slide
+module Text.HaskellReveal.Slide
   ( Slide(..)
   , createSlide
   ) where
