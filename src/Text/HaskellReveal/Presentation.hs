@@ -6,15 +6,13 @@ module Text.HaskellReveal.Presentation
   , mkPresentation
   ) where
 
-import Text.Blaze.Html
-import Text.Blaze.Html5
-import Text.Blaze.Html5.Attributes hiding (title)
-import Text.Blaze.Internal (attribute)
+import Text.Blaze.Html5 (Html, (!), preEscapedToHtml)
+import qualified Text.Blaze.Html5 as H
+import qualified Text.Blaze.Html5.Attributes as A
 import Text.Blaze.Html.Renderer.Pretty (renderHtml)
 
 import Control.Monad (forM_)
 import Data.String (fromString)
-import Prelude hiding (head, id, div)
 
 import Text.HaskellReveal.Slide
 import Text.HaskellReveal.CSS
@@ -35,7 +33,8 @@ data Theme
   | Solarized
   | White
 
-data HighlightTheme = Monokai
+data HighlightTheme
+  = Monokai
 
 data RevealConfig = MkRevealConfig
   { theme :: Theme
@@ -44,50 +43,44 @@ data RevealConfig = MkRevealConfig
   }
 
 mkPresentation :: [Slide] -> RevealConfig -> FilePath -> IO ()
-mkPresentation myslides config fp = do
-  let renderedSlides = slides config myslides
-  writeFile "index.html" (renderHtml renderedSlides)
-
-slidesToHtml :: [Slide] -> Html
-slidesToHtml slides = forM_  slides unSlide
-
-slides :: RevealConfig -> [Slide] -> Html
-slides config slides = docTypeHtml $ do
-  head (slidesHead config)
-  body (slidesBody slides)
+mkPresentation slides config fp = do
+  let renderedSlides = H.docTypeHtml $ do
+          H.head (slidesHead config)
+          H.body (slidesBody slides)
+  writeFile fp (renderHtml renderedSlides)
 
 slidesHead :: RevealConfig -> Html
 slidesHead config = do
-  meta ! charset "utf-8"
-  meta ! name "viewport" ! content "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  title (fromString . slidesTitle $ config)
-  Text.Blaze.Html5.style $ preEscapedToHtml resetCSS
-  Text.Blaze.Html5.style $ preEscapedToHtml revealCSS
-  Text.Blaze.Html5.style $ preEscapedToHtml (case theme config of -- id = "theme" ?
-                                               Beige     -> beigeCSS
-                                               Black     -> blackCSS
-                                               Blood     -> bloodCSS
-                                               League    -> leagueCSS
-                                               Moon      -> moonCSS
-                                               Night     -> nightCSS
-                                               Serif     -> serifCSS
-                                               Simple    -> simpleCSS
-                                               Sky       -> skyCSS
-                                               Solarized -> solarizedCSS
-                                               White     -> whiteCSS)
-  Text.Blaze.Html5.style $ preEscapedToHtml (case highlightTheme config of -- id = "highlight-theme" ?
-                                               Monokai -> monokaiCSS)
+  H.meta ! A.charset "utf-8"
+  H.meta ! A.name "viewport" ! A.content "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  H.title (fromString . slidesTitle $ config)
+  H.style $ preEscapedToHtml resetCSS
+  H.style $ preEscapedToHtml revealCSS
+  H.style $ preEscapedToHtml (case theme config of -- id = "theme" ?
+                                 Beige     -> beigeCSS
+                                 Black     -> blackCSS
+                                 Blood     -> bloodCSS
+                                 League    -> leagueCSS
+                                 Moon      -> moonCSS
+                                 Night     -> nightCSS
+                                 Serif     -> serifCSS
+                                 Simple    -> simpleCSS
+                                 Sky       -> skyCSS
+                                 Solarized -> solarizedCSS
+                                 White     -> whiteCSS)
+  H.style $ preEscapedToHtml (case highlightTheme config of -- id = "highlight-theme" ?
+                                 Monokai -> monokaiCSS)
 
 slidesBody :: [Slide] -> Html
 slidesBody slides = do
-  div ! class_ "reveal" $ div ! class_ "slides" $ slidesToHtml slides
+  H.div ! A.class_ "reveal" $ H.div ! A.class_ "slides" $ forM_ slides unSlide
 
-  script $ preEscapedToHtml revealJS
-  script $ preEscapedToHtml notesJS
-  script $ preEscapedToHtml highlightJS
-  script $ preEscapedToHtml mathJS
+  H.script $ preEscapedToHtml revealJS
+  H.script $ preEscapedToHtml notesJS
+  H.script $ preEscapedToHtml highlightJS
+  H.script $ preEscapedToHtml mathJS
 
-  script $ preEscapedToHtml $ unlines
+  H.script $ preEscapedToHtml $ unlines
     [ "Reveal.initialize({"
     , "  hash: true,"
     , "  math: {"
