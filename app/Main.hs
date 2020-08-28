@@ -13,6 +13,8 @@ import Text.HaskellReveal.Slide
 import Text.HaskellReveal.Presentation
 import Text.HaskellReveal.CodeBlock
 
+-- We choose a theme for the presentation, a theme for
+-- the code highlighter, and a title for the slides.
 config :: RevealConfig
 config = MkRevealConfig
   { theme = Serif
@@ -20,37 +22,38 @@ config = MkRevealConfig
   , slidesTitle = "MySlides"
   }
 
-slide1 :: Slide
-slide1 = createSlide $ h2 $ "Title Slide"
+titleSlide :: Slide
+titleSlide = createSlide $ do
+  h2 $ "Title Slide"
 
-slide2 :: Slide
-slide2 = createSlide $ do
+listSlide :: Slide
+listSlide = createSlide $ do
   h3 $ "Slide 2"
   ul $ do
     li $ "point 1"
     li $ "point 2"
 
-slide3 :: Slide
-slide3 = createSlide $ do
+codeSlide :: Slide
+codeSlide = createSlide $ do
   h3 $ "Code"
   codeBlock "1-2"
     [ "main :: IO ()"
     , "main = putStrLn \"Hello World\""
     ]
 
-slide4 :: Slide
-slide4 = createSlide $ do
+goodbyeSlide :: Slide
+goodbyeSlide = createSlide $ do
   h3 $ "Test"
-  "hello"
+  "Goodbye"
 
-mySlides :: [Slide]
-mySlides = [slide1, slide2, slide3, slide4]
+slides :: [Slide]
+slides = [ titleSlide
+         , listSlide
+         , codeSlide
+         , goodbyeSlide
+         ]
 
-renderedSlides :: String
-renderedSlides = renderHtml $ slides config mySlides
-
+-- Running the program will write the presentation to disk as "index.html"
 main :: IO ()
-main = do
-  putStrLn "Writing to file index.html"
-  writeFile "index.html" renderedSlides
+main = mkPresentation slides config "index.html"
 

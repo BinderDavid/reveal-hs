@@ -1,10 +1,16 @@
 {-# LANGUAGE OverloadedStrings #-}
-module Text.HaskellReveal.Presentation where
+module Text.HaskellReveal.Presentation
+  ( Theme(..)
+  , HighlightTheme(..)
+  , RevealConfig(..)
+  , mkPresentation
+  ) where
 
 import Text.Blaze.Html
 import Text.Blaze.Html5
 import Text.Blaze.Html5.Attributes hiding (title)
 import Text.Blaze.Internal (attribute)
+import Text.Blaze.Html.Renderer.Pretty (renderHtml)
 
 import Control.Monad (forM_)
 import Data.String (fromString)
@@ -36,6 +42,11 @@ data RevealConfig = MkRevealConfig
   , highlightTheme :: HighlightTheme
   , slidesTitle :: String
   }
+
+mkPresentation :: [Slide] -> RevealConfig -> FilePath -> IO ()
+mkPresentation myslides config fp = do
+  let renderedSlides = slides config myslides
+  writeFile "index.html" (renderHtml renderedSlides)
 
 slidesToHtml :: [Slide] -> Html
 slidesToHtml slides = forM_  slides unSlide
